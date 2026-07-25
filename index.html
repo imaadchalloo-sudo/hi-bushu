@@ -2,97 +2,125 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You 💖</title>
+<title>For You ❤️</title>
 <style>
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial;
+  overflow: hidden;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+}
+
+/* Slides */
+.slide {
+  position: absolute;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  flex-direction: column;
+  transition: 0.6s;
 }
- 
-.container {
-  text-align: center;
-  color: white;
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
- 
+
+/* Button */
 button {
-  padding: 15px 35px;
-  font-size: 18px;
+  padding: 12px 25px;
   border: none;
-  border-radius: 50px;
+  border-radius: 20px;
   background: white;
   color: #ff4d6d;
+  font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(255,255,255,0.6);
-  transition: 0.3s;
+  margin-top: 20px;
 }
- 
-button:hover {
-  transform: scale(1.1);
+
+/* Input */
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
 }
- 
-#message {
-  margin-top: 25px;
-  font-size: 22px;
-  max-width: 320px;
-  line-height: 1.6;
-}
- 
+
+/* Hearts */
 .heart {
   position: absolute;
+  color: pink;
   animation: float 6s linear infinite;
 }
- 
+
 @keyframes float {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(-100vh);}
+  from {transform: translateY(100vh);}
+  to {transform: translateY(-10vh);}
 }
 </style>
 </head>
- 
+
 <body>
- 
-<div class="container">
+
+<!-- Slide 1 -->
+<div id="slide1" class="slide">
   <h2>Tap this 💌</h2>
-  <button onclick="start()">Open</button>
-  <div id="message"></div>
+  <button onclick="nextSlide(1)">Open</button>
 </div>
- 
+
+<!-- Slide 2 -->
+<div id="slide2" class="slide hidden">
+  <h2>Write the name of your favorite person 💖</h2>
+  <input type="text" id="nameInput" placeholder="Type here...">
+  <button onclick="checkName()">Next</button>
+</div>
+
+<!-- Slide 3 -->
+<div id="slide3" class="slide hidden">
+  <div style="max-width:90%; overflow:auto; height:70vh;">
+  <h2>💌</h2>
+  <p id="message"></p>
+  </div>
+</div>
+
 <script>
-let text = "WRITE YOUR MESSAGE HERE 💖";
-let i = 0;
- 
-function start() {
-  typeWriter();
-  createHearts();
+function nextSlide(num) {
+  document.getElementById("slide" + num).classList.add("hidden");
+  document.getElementById("slide" + (num+1)).classList.remove("hidden");
 }
- 
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("message").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeWriter, 40);
+
+function checkName() {
+  let name = document.getElementById("nameInput").value.toLowerCase();
+  
+  if(name === "bushu") {
+    nextSlide(2);
+    showMessage();
+  } else {
+    alert("Hmm... try again ❤️");
   }
 }
- 
-function createHearts() {
-  setInterval(() => {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (20 + Math.random() * 20) + "px";
-    document.body.appendChild(heart);
- 
-    setTimeout(() => heart.remove(), 6000);
-  }, 300);
+
+function showMessage() {
+  document.getElementById("message").innerText = `bushu kya baat ha. itne off kyu hogaye, muje share toh kar sakti ho, muje pata ha kuch howa ha, dard ya ya ghar pe kuch howa ha, woh ma nhi jaanta bas itna janta ho meri bushu thk nhi, ma nhi janta ki tumhe mere sath baat karte waqt be dard tha aur abi zyada ha, ya ghar ma tumhe kisi ne kuch bola. liken tum mujse share toh kar slati ho. ma suno ga tumhare baate ,jou be ha. yum mere sath apne har takleef share kar sakti ho. mere liye tumse zyada important aur koi nhi. tumhare kushi meri kushi ha , tumhara gham mera gam ha. agr tum muje apne prblms chupao gi toh ma kamzoor insaan kese tumhe apna gham bola karo ga. upar se ma tumhare terah bahadur toh nhi ho. sab dard apne dil ke andr he mat dabao. bahar be toh ane dou. un feeling lo mujse be toh takraane dou. ma sambhal lounga tumhe. tum bolo toh sahi, dil halka hoga . ma tumse bohot karta ho ,tumhare taraf se aye har cheez se. zarra zarra qabool ha jou tumhare taraf se ho. ma tumhare sath har cheez ma rehna chata ho. kushi ma be gham ma be. takleef ma be. aur mout ke waqt be ek sath. ma tumse bohot mohobbat karta ho. i love you. ma jaanta ho tum bhaari dil leke sou gaye ho. muje be ab neend nhi aarahe tumhe ese bhari dil ke sath ekele chodke . i love you very much meri pyaari bushu. tum mere liye toh ehm ho. please kal muje batana kya baat ha. i care for you. byee fee Amanillah ❤️`;
 }
+
+// hearts
+setInterval(() => {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (10 + Math.random()*20) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
 </script>
- 
+
 </body>
 </html>
